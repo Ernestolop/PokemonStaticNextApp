@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
+import Link from "next/link";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
 
 const NavbarUi = () => {
   return (
@@ -11,17 +12,22 @@ const NavbarUi = () => {
           alt="Icono de la app de pokémon"
           width={70}
           height={70}
+          priority
         />
-        <h1><span className="text-xl font-bold">P</span>okémon</h1>
+
+        <Link href="/" passHref>
+          <h1><span className="text-xl font-bold">P</span>okémon</h1>
+        </Link>
+
       </NavbarBrand>
       <NavbarContent className="sm:flex gap-4" justify="center">
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
+        <NavbarItem>
+          <Link href="/favorites" passHref>
             Favoritos
           </Link>
         </NavbarItem>
       </NavbarContent>
-    </Navbar>
+    </Navbar >
   );
 }
 

@@ -14,7 +14,7 @@ const Layout = ({ children, title, description, keywords }) => {
 
       <NavbarUi />
 
-      <main>
+      <main className="p-10">
         {children}
       </main>
     </>
