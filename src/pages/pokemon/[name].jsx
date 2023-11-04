@@ -16,12 +16,12 @@ const pokemon = ({ pokemon }) => {
 }
 
 export const getStaticProps = async ({ params }) => {
-    const { id } = params;
-    const { data } = await pokeApi.get(`/pokemon/${id}`);
+    const { name } = params;
+    const { data } = await pokeApi.get(`/pokemon/${name}`);
     const pokemon = {
         id: data.id,
         name: data.name,
-        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`,
+        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id}.svg`,
         sprites: {
             frontDefault: data.sprites.front_default,
             backDefault: data.sprites.back_default,
@@ -37,9 +37,12 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
-    const paths = Array.from({ length: 151 }, (_, index) => {
-        return { params: { id: `${index + 1}` } }
-    })
+    const {data} = await pokeApi.get("/pokemon?limit=151");
+    const paths = data.results.map(({name}) => ({
+        params: {
+            name
+        }
+    }));
     return {
         paths,
         fallback: false

@@ -1,9 +1,32 @@
+import { useState, useEffect } from "react";
 import { Button, Card, CardBody, Image } from "@nextui-org/react";
-
+import confetti from "canvas-confetti";
+import { toggleFavorite, existInFavorites } from "@/utilities";
 
 const Pokemon = ({ pokemon }) => {
-    const { name, image, sprites } = pokemon;
+    const [isFavorite, setIsFavorite] = useState(false);
+    useEffect(() => {
+        setIsFavorite(existInFavorites(pokemon.id));
+    }, [pokemon.id]);
+
+    const { id, name, image, sprites } = pokemon;
     const { frontDefault, backDefault, frontShiny, backShiny } = sprites;
+
+    const handleToggleFavorite = () => {
+        toggleFavorite(id, name);
+        setIsFavorite(!isFavorite);
+        if (isFavorite) return;
+        confetti({
+            zIndex: 999,
+            particleCount: 100,
+            spread: 160,
+            angle: -100,
+            origin: {
+                x: 1,
+                y: 0
+            }
+        });
+    }
     return (
         <div className="flex flex-col sm:flex-row gap-5 justify-center">
             <Card shadow="sm">
@@ -25,8 +48,8 @@ const Pokemon = ({ pokemon }) => {
                         <article className="px-10">
                             <header className="flex flex-col sm:flex-row justify-between items-center gap-2">
                                 <h1 className="text-2xl font-bold capitalize">{name}</h1>
-                                <Button radius="full" className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg h-8">
-                                    Guardar en favoritos
+                                <Button onClick={() => handleToggleFavorite(id)} radius="full" className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg h-8">
+                                    {isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
                                 </Button>
                             </header>
                             <section className="pt-3">
