@@ -1,13 +1,13 @@
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 
-export default function ({ pokemon }) {
+const PokemonCard = ({ pokemon }) => {
 
     const router = useRouter();
-    const { id, name, image } = pokemon;    
+    const { id, name, image } = pokemon;
 
     const handleClick = () => {
-        router.push(`/pokemon/${name}`)
+        router.push(`/pokemon/${id}`)
     }
 
     return (
@@ -29,3 +29,5 @@ export default function ({ pokemon }) {
         </Card>
     )
 }
+
+export default PokemonCard;
