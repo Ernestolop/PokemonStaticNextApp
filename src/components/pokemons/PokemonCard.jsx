@@ -7,7 +7,7 @@ const PokemonCard = ({ pokemon }) => {
     const { id, name, image } = pokemon;
 
     const handleClick = () => {
-        router.push(`/pokemon/${id}`)
+        router.push(`/pokemon/${name}`)
     }
 
     return (
